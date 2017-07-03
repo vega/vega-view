@@ -86,7 +86,7 @@ function layoutGroup(view, group, _) {
 
   // layout legends, adjust viewBounds
   if (legends.length) {
-    flow = {left: 0, right: 0, margin: _.legendMargin || 8};
+    flow = {left: 0, right: 0, top: 0, bottom: 0, margin: _.legendMargin || 8};
 
     for (i=0, n=legends.length; i<n; ++i) {
       b = layoutLegend(view, legends[i], flow, legendBounds, width, height);
@@ -272,8 +272,8 @@ function layoutLegend(view, legend, flow, axisBounds, width, height) {
       orient = datum.orient,
       offset = item.offset,
       bounds = item.bounds,
-      x = 0,
-      y = (flow[orient] || 0),
+      x = orient === 'top' || orient === 'bottom' ? flow[orient] : 0,
+      y = orient === 'left' || orient === 'right' ? flow[orient] : 0,
       w, h;
 
   tempBounds.clear().union(bounds);
@@ -293,6 +293,14 @@ function layoutLegend(view, legend, flow, axisBounds, width, height) {
     case 'right':
       x += offset + Math.ceil(axisBounds.x2);
       flow.right += h + flow.margin;
+      break;
+    case 'top':
+      y -= h + offset - Math.floor(axisBounds.y1);
+      flow.top += w + flow.margin;
+      break;
+    case 'bottom':
+      y += offset + Math.ceil(axisBounds.y2);
+      flow.bottom += w + flow.margin;
       break;
     case 'top-left':
       x += offset;
