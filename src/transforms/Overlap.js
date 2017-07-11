@@ -21,7 +21,12 @@ var prototype = inherits(Overlap, Transform);
 var methods = {
   parity: function(items) {
     return items.filter(function(item, i) {
-      return i % 2 ? (item.opacity = 0) : 1;
+      if (i % 2) {
+        item.opacity = 0;
+        return 0;
+      } else {
+        return 1;
+      }
     });
   },
   greedy: function(items) {
@@ -31,7 +36,8 @@ var methods = {
         a = b;
         return 1;
       } else {
-        return b.opacity = 0;
+        b.opacity = 0;
+        return 0;
       }
     });
   }
