@@ -93,9 +93,18 @@ function layoutGroup(view, group, _) {
 
     for (i=0, n=legends.length; i<n; ++i) {
       b = layoutLegend(view, legends[i], flow, xBounds, yBounds, width, height);
-      (_.autosize && _.autosize.type === Fit)
-        ? viewBounds.add(b.x1, b.y1).add(b.x2, b.y2)
-        : viewBounds.union(b);
+      if (_.autosize && _.autosize.type === Fit) {
+        var orient = legends[i].items[0].datum.orient;
+        if (orient === 'left' || orient === 'right') {
+          viewBounds.add(b.x1, 0).add(b.x2, 0);
+        }
+        else if (orient === 'top' || orient === 'bottom') {
+          viewBounds.add(0, b.y1).add(0, b.y2);
+        }
+      }
+      else {
+        viewBounds.union(b);
+      }
     }
   }
 
