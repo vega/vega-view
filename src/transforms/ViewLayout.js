@@ -94,17 +94,18 @@ function layoutGroup(view, group, _) {
     for (i=0, n=legends.length; i<n; ++i) {
       b = layoutLegend(view, legends[i], flow, xBounds, yBounds, width, height);
       if (_.autosize && _.autosize.type === Fit) {
+        // for autosize fit, incorporate the orthogonal dimension only
+        // legends that overrun the chart area will then be clipped
+        // otherwise the chart area gets reduced to nothing!
         var orient = legends[i].items[0].datum.orient;
         if (orient === 'left' || orient === 'right') {
           viewBounds.add(b.x1, 0).add(b.x2, 0);
-          continue;
-        }
-        else if (orient === 'top' || orient === 'bottom') {
+        } else if (orient === 'top' || orient === 'bottom') {
           viewBounds.add(0, b.y1).add(0, b.y2);
-          continue;
         }
+      } else {
+        viewBounds.union(b);
       }
-      viewBounds.union(b);
     }
   }
 
