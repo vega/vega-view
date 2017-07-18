@@ -97,14 +97,14 @@ function layoutGroup(view, group, _) {
         var orient = legends[i].items[0].datum.orient;
         if (orient === 'left' || orient === 'right') {
           viewBounds.add(b.x1, 0).add(b.x2, 0);
+          continue;
         }
         else if (orient === 'top' || orient === 'bottom') {
           viewBounds.add(0, b.y1).add(0, b.y2);
+          continue;
         }
       }
-      else {
-        viewBounds.union(b);
-      }
+      viewBounds.union(b);
     }
   }
 
