@@ -46,9 +46,9 @@ export default function View(spec, options) {
   view._renderer = null;
   view._redraw = true;
   view._handler = new CanvasHandler().scene(root);
-  view._eventListeners = [];
   view._preventDefault = false;
-  view._resizeListeners = []
+  view._eventListeners = [];
+  view._resizeListeners = [];
 
   // initialize dataflow graph
   var ctx = runtime(view, spec, options.functions);
@@ -216,6 +216,24 @@ prototype.removeEventListener = function(type, handler) {
   return this;
 };
 
+prototype.addResizeListener = function(handler) {
+  var l = this._resizeListeners;
+  if (l.indexOf(handler) < 0) {
+    // add handler if it isn't already registered
+    l.push(handler);
+  }
+  return this;
+};
+
+prototype.removeResizeListener = function(handler) {
+  var l = this._resizeListeners,
+      i = l.indexOf(handler);
+  if (i >= 0) {
+    l.splice(i, 1);
+  }
+  return this;
+};
+
 prototype.addSignalListener = function(name, handler) {
   var s = lookupSignal(this, name),
       h = function() { handler(name, s.value); };
@@ -234,18 +252,6 @@ prototype.removeSignalListener = function(name, handler) {
   if (h.length) t.remove(h[0]);
   return this;
 };
-
-prototype.addResizeListener = function(handler) {
-  this.removeResizeListener(handler);  // remove handler if it already exists
-  this._resizeListeners.push(handler);
-}
-
-prototype.removeResizeListener = function(handler) {
-  var idx = this._resizeListeners.indexOf(handler);
-  if (idx >= 0) {
-    this._resizeListeners.splice(idx, 1);
-  }
-}
 
 prototype.preventDefault = function(_) {
   if (arguments.length) {
