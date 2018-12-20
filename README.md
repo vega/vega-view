@@ -1,6 +1,4 @@
-<div style="background-color: #ffe; border: 1px dashed #888; padding: 6px;">
-This package has been consolidated into the <a href="https://github.com/vega/vega">vega/vega</a> repository, where future development and issues will be handled. This repository has been archived and is now read-only.
-</div>
+**NOTE:** This package has been consolidated into the [`vega/vega`](https://github.com/vega/vega) repository, where future development and issues will be handled. This repository has been archived and is now read-only.
 
 # vega-view
 
