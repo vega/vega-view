@@ -1,3 +1,7 @@
+<div style="background-color: #ffe; border: 1px dashed #888; padding: 6px;">
+This package has been consolidated into the <a href="https://github.com/vega/vega">vega/vega</a> repository, where future development and issues will be handled. This repository has been archived and is now read-only.
+</div>
+
 # vega-view
 
 View component for Vega visualizations. A **View** instantiates
